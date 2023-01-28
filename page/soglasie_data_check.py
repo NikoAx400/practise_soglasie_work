@@ -2,7 +2,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
 from base.base_class import Base
-import time
+import allure
 
 class soglasie_data_check(Base):
 
@@ -36,7 +36,6 @@ class soglasie_data_check(Base):
     def get_polis_start_date(self):
         return WebDriverWait(self.driver, 30).until(EC.element_to_be_clickable((By.XPATH, self.polis_start_date)))
 
-
     def get_drivers(self):
         return WebDriverWait(self.driver, 30).until(EC.element_to_be_clickable((By.XPATH, self.tab_drivers)))
     def get_full_name_drivers(self):
@@ -44,12 +43,10 @@ class soglasie_data_check(Base):
     def get_date_birth_drivers(self):
         return WebDriverWait(self.driver, 30).until(EC.element_to_be_clickable((By.XPATH, self.date_birth_field)))
 
-
     def get_exploitation(self):
         return WebDriverWait(self.driver, 30).until(EC.element_to_be_clickable((By.XPATH, self.tab_exploitation)))
     def get_policy_start_date_field(self):
         return WebDriverWait(self.driver, 30).until(EC.element_to_be_clickable((By.XPATH, self.policy_start_date_field)))
-
 
     def get_owner(self):
         return WebDriverWait(self.driver, 30).until(EC.element_to_be_clickable((By.XPATH, self.tab_owner)))
@@ -109,32 +106,29 @@ class soglasie_data_check(Base):
     # Methods
 
     def data_check(self):
+        with allure.step("data_check"):
 
-        self.click_specifications()
-        date_cpec_polis = self.value_start_specifications_polis()
-        time.sleep(2)
+            self.click_specifications()
+            date_cpec_polis = self.value_start_specifications_polis()
 
-        self.click_drivers()
-        name_drivers = self.value_full_name_drivers()
-        birth_drivers = self.value_date_birth_drivers()
-        time.sleep(2)
+            self.click_drivers()
+            name_drivers = self.value_full_name_drivers()
+            birth_drivers = self.value_date_birth_drivers()
 
-        self.click_exploitation()
-        start_exp_polis = self.value_start_exploitation_polis()
-        time.sleep(2)
+            self.click_exploitation()
+            start_exp_polis = self.value_start_exploitation_polis()
 
-        self.click_owner()
-        name_owner = self.value_full_name_owner()
-        birh_owner = self.value_birth_owner()
-        time.sleep(2)
+            self.click_owner()
+            name_owner = self.value_full_name_owner()
+            birh_owner = self.value_birth_owner()
 
-        """Производится сверка ФИО и даты рождения в разделе Водители и Собственника на предмет идентичности, т.к. тест
-                предполагает, что страхователь/водитель/собственник одно и то же лицо"""
-        assert name_drivers == name_owner
-        assert birth_drivers == birh_owner
-        """Производится сверка даты начала действия полиса из раздела 
-        Характеристики и Использования на предмет идентичности"""
-        assert date_cpec_polis == start_exp_polis
+            """Производится сверка ФИО и даты рождения в разделе Водители и Собственника на предмет идентичности, т.к. тест
+                    предполагает, что страхователь/водитель/собственник одно и то же лицо"""
+            assert name_drivers == name_owner
+            assert birth_drivers == birh_owner
+            """Производится сверка даты начала действия полиса из раздела 
+            Характеристики и Использования на предмет идентичности"""
+            assert date_cpec_polis == start_exp_polis
 
 
 

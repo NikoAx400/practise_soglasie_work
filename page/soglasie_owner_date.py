@@ -1,13 +1,10 @@
-from selenium.webdriver import Keys
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
+from selenium.webdriver import Keys
 from base.base_class import Base
-import datetime
+import allure
 import time
-
-from page.soglasie_drivers_date import drivers_data
-
 
 class owner_data(Base):
 
@@ -27,6 +24,7 @@ class owner_data(Base):
     series_number_passport_field = "//*[contains(@class, 'step owner')]//*[contains(@class, 'box')]//*[contains(@class, 'col')]//*[text() = 'Серия и номер Паспорта РФ']/following-sibling::*[contains(@class, 'input')]//input"
     issued_by_passport_field = "//*[contains(@class, 'step owner')]//*[contains(@class, 'box')]//*[contains(@class, 'col')]//*[text() = 'Кем выдан']/following-sibling::*[contains(@class, 'input')]//input"
     adress_field = "//*[contains(@class, 'step owner')]//*[contains(@class, 'box')]//*[contains(@class, 'col')]//*[text() = 'Адрес']/following-sibling::*[contains(@class, 'input')]//input"
+    active_drop_down_list = "//*[contains(@class, 'step owner')]//*[contains(@class, 'box')]//*[contains(@class, 'col')]//*[text() = 'Адрес']/following-sibling::*//*[contains(@class, 'active')]"
 
     continue_btn = "//*[text() = 'Далее']"
 
@@ -52,6 +50,9 @@ class owner_data(Base):
 
     def get_adress_field(self):
         return WebDriverWait(self.driver, 30).until(EC.element_to_be_clickable((By.XPATH, self.adress_field)))
+
+    def get_active_drop_down_list(self):
+        return WebDriverWait(self.driver, 30).until(EC.element_to_be_clickable((By.XPATH, self.active_drop_down_list)))
 
     def get_owner_policyholder_switch(self):
         return WebDriverWait(self.driver, 30).until(EC.element_to_be_clickable((By.XPATH, self.owner_policyholder)))
@@ -102,22 +103,23 @@ class owner_data(Base):
         # Заполнить поле "Адрес"
     def input_adress_field(self, adress):
         self.get_adress_field().click()
-        self.get_adress_field().clear()
         self.get_adress_field().send_keys(adress)
-        time.sleep(3)
+        self.get_active_drop_down_list()
+        time.sleep(1)
         self.get_adress_field().send_keys(Keys.ENTER)
-
+        time.sleep(1)
 
 
     # METHODS
 
     def owner_date(self):
+        with allure.step("owner_date"):
 
-        self.owner_policyholder_swich()
-        # self.click_select_woman()
-        self.input_series_number_passport('45 05 454545')
-        self.input_date_issue_passport('10.01.2019')
-        self.input_issued_by_passport('город Москва')
-        self.input_adress_field(', Москва-Товарная МЦД, д 5')
-        self.press_continue_btn()
+            self.owner_policyholder_swich()
+            self.click_select_woman()
+            self.input_series_number_passport('45 05 454545')
+            self.input_date_issue_passport('10.01.2019')
+            self.input_issued_by_passport('город Москва')
+            self.input_adress_field(', ул Лесная, д 5, кв 45')
+            self.press_continue_btn()
 

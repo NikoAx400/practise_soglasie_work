@@ -2,6 +2,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
 from base.base_class import Base
+import allure
 
 class drivers_data(Base):
 
@@ -130,13 +131,14 @@ class drivers_data(Base):
     # METHODS
 
     def select_drivers_date(self):
+        with allure.step("select_drivers_date"):
 
-        self.click_driver_insured_switch()
-        self.click_select_woman()
-        self.input_full_name_field('Карпова Карина Кариновна')
-        self.input_date_birth_field('10.02.1988')
-        self.input_series_number_driver_lisense('1988 856255')
-        self.input_date_issue_driver_lisense('10.02.2010')
-        self.input_experience_field('5')
-        self.press_continue_btn()
+            self.click_driver_insured_switch()
+            self.click_select_woman()
+            self.input_full_name_field('Карпова Карина Кариновна')
+            self.input_date_birth_field('10.02.1988')
+            self.input_series_number_driver_lisense('1988 856255')
+            self.input_date_issue_driver_lisense('10.02.2010')
+            self.input_experience_field('5')
+            self.press_continue_btn()
 

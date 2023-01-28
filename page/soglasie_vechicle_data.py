@@ -1,9 +1,10 @@
-from selenium.webdriver import Keys
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
+from selenium.webdriver import Keys
 from base.base_class import Base
 import datetime
+import allure
 import time
 
 class vechicle_data(Base):
@@ -77,14 +78,12 @@ class vechicle_data(Base):
     def input_start_year(self):
         current_date = datetime.datetime.now()
         current_year = current_date.strftime('%Y')
-        time.sleep(3)
         self.get_select_start_year().send_keys(current_year)
 
         # Заполнить поле "Дата начала действия полиса"
     def input_polis_start_date(self):
         current_date = datetime.datetime.now() + datetime.timedelta(days=1)
         date_polis = current_date.strftime('%d.%m.%Y')
-        time.sleep(3)
         self.get_polis_start_date().send_keys(date_polis)
 
         # Заполнить поле "Город регистрации собственника"
@@ -98,12 +97,13 @@ class vechicle_data(Base):
     # METHODS
 
     def select_car(self):
+        with allure.step("select_car"):
 
-        self.click_calculation_not_number()
-        self.click_select_name_car()
-        self.click_select_model_car()
-        self.input_start_year()
-        self.input_power_field('130')
-        self.input_polis_start_date()
-        self.input_city_registration('Москва')
-        self.press_continue_btn()
+            self.click_calculation_not_number()
+            self.click_select_name_car()
+            self.click_select_model_car()
+            self.input_start_year()
+            self.input_power_field('130')
+            self.input_polis_start_date()
+            self.input_city_registration('Москва')
+            self.press_continue_btn()

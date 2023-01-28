@@ -2,6 +2,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
 from base.base_class import Base
+import allure
 import datetime
 
 class data_document_car(Base):
@@ -60,8 +61,9 @@ class data_document_car(Base):
     # METHODS
 
     def document_car(self):
+        with allure.step("document_car"):
 
-        self.input_registration_plate('А 123 АВ 199')
-        self.input_serial_number_ctc('1234 567895')
-        self.input_date_issue()
-        self.press_continue_btn()
+            self.input_registration_plate('А 123 АВ 199')
+            self.input_serial_number_ctc('1234 567895')
+            self.input_date_issue()
+            self.press_continue_btn()

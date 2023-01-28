@@ -2,6 +2,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
 from base.base_class import Base
+import allure
 
 class soglasiePage(Base):
 
@@ -39,7 +40,9 @@ class soglasiePage(Base):
     # METHODS
 
     def select_buy_polis(self):
-        self.driver.get(self.base_url)
-        self.driver.maximize_window()
-        self.click_buy_polis()
-        self.click_select_osago()
+        with allure.step("select_buy_polis"):
+
+            self.driver.get(self.base_url)
+            self.driver.maximize_window()
+            self.click_buy_polis()
+            self.click_select_osago()

@@ -7,10 +7,11 @@ from page.soglasie_policyholder_date import soglasie_policyholder_date
 from page.soglasie_select_insurance import soglasiePage
 from page.soglasie_vechicle_data import vechicle_data
 from selenium import webdriver
+import allure
 
 
 
-
+@allure.description("test_buy_polis_osago")
 def test_buy_polis_osago(set_up):
 
     # driver = webdriver.Chrome()

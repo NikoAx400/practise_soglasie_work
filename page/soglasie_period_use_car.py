@@ -1,10 +1,8 @@
-from selenium.webdriver import Keys
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
-from page.soglasie_vechicle_data import vechicle_data
 from base.base_class import Base
-import datetime
+import allure
 import time
 
 class use_car_period(Base):
@@ -20,7 +18,7 @@ class use_car_period(Base):
     select_period_switch = "//*[contains(@class, 'step__content')]//*[contains(@class, 'exploitation')]//*[contains(@class, 'box')]//*[contains(@class, 'col')]//*[text() = 'Выбрать период']/ancestor-or-self::*[contains(@class, 'switcher')]//*[contains(@class, 'switcher__switcher')]"
 
     type_insurance_field = "//*[contains(@class, 'step__content')]//*[contains(@class, 'exploitation')]//*[contains(@class, 'box')]//*[contains(@class, 'col')]//*[text() = 'Тип страхования']/following-sibling::*[contains(@class, 'select')]//input"
-    type_insurance_20_days = f"//*[contains(@class, 's-select__list-select-holder')]//ul//li[text() = '20']"
+    type_insurance_20_days = "//*[contains(@class, 's-select__list-select-holder')]//ul//li[text() = '20']"
     type_insurance_1_year = "//*[contains(@class, 's-select__list-select-holder')]//ul//li[text() = 'Обычный договор сроком действия 1 год']"
 
     purpose_use_car_field = "//*[contains(@class, 'step__content')]//*[contains(@class, 'exploitation')]//*[contains(@class, 'box')]//*[contains(@class, 'col')]//*[text() = 'Цель использования ТС']/following-sibling::*[contains(@class, 'input')]//input"
@@ -84,7 +82,7 @@ class use_car_period(Base):
     def select_type_insurance_1year(self):
         self.get_type_insurance_field().click()
         time.sleep(1)
-        type_insuranse_1 =  self.get_type_insurance_1_year().click()
+        type_insuranse_1 = self.get_type_insurance_1_year().click()
         return type_insuranse_1
 
         # Проверка значения в поле "Тип страхования"
@@ -92,14 +90,14 @@ class use_car_period(Base):
         value_insurance = self.get_type_insurance_field().get_attribute('value')
         correct_value = correct_insurance
         assert value_insurance == correct_value
-        print(value_insurance)
+
 
         # Проверка значения в поле "Цель использования ТС"
     def value_purpose_use_car(self, correct_use):
         value_purpose_use_car = self.get_purpose_use_car_field().get_attribute('value')
         correct_value_use = correct_use
         assert value_purpose_use_car == correct_value_use
-        print(value_purpose_use_car)
+
 
         # Проверка значений в полях "Дата начала действия полиса" и "Дата окончания действия полиса"
         # При использовании страхования на год, разница 1.
@@ -114,10 +112,11 @@ class use_car_period(Base):
     # METHODS
 
     def select_period_use_car(self):
+        with allure.step("select_period_use_car"):
 
-        self.select_type_insurance_1year()
-        self.value_type_insurance('Обычный договор сроком действия 1 год')
-        self.value_purpose_use_car('Личные')
-        self.value_start_finish_action_polis()
-        self.press_continue_btn()
+            self.select_type_insurance_1year()
+            self.value_type_insurance('Обычный договор сроком действия 1 год')
+            self.value_purpose_use_car('Личные')
+            self.value_start_finish_action_polis()
+            self.press_continue_btn()
 

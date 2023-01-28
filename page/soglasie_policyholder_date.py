@@ -2,7 +2,9 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
 from base.base_class import Base
+import allure
 import time
+
 
 class soglasie_policyholder_date(Base):
 
@@ -51,7 +53,7 @@ class soglasie_policyholder_date(Base):
 
     def input_type_identification_number(self):
         self.get_type_identification_number_field().click()
-        time.sleep(2)
+        time.sleep(1)
         self.get_type_body().click()
         self.get_type_identification_number_field().click()
 
@@ -74,10 +76,11 @@ class soglasie_policyholder_date(Base):
     # METHODS
 
     def select_policyholder_date(self):
+        with allure.step("select_policyholder_date"):
 
-        self.input_type_identification_number()
-        self.input_identification_number('12345678978945612358')
-        self.input_email('moe_soglasie@mail.ru')
-        self.input_identification_number('123456789')
-        self.input_telephone('852345858')
+            self.input_type_identification_number()
+            self.input_identification_number('12345678978945612358')
+            self.input_email('moe_soglasie@mail.ru')
+            self.input_identification_number('123456789')
+            self.input_telephone('852345858')
 
