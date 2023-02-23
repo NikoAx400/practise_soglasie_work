@@ -24,6 +24,8 @@ class vechicle_data(Base):
     city_registration = "//*[contains(@class, 'step specifications')]//*[contains(@class, 'step__content')]//*[contains(@class, 'box box-mb40')]//*[contains(@class, 'col')]//*[text() = 'Город регистрации собственника']/following-sibling::*[contains(@class, 'input')]//input"
     continue_btn = "//*[text() = 'Далее']"
 
+    notification = "//*[contains(@class, 'notification')]//*[text() = 'Пожалуйста, заполните все обязательные поля.']"
+
     # GETTERS
 
     def get_calculation_not_number(self):
@@ -46,6 +48,9 @@ class vechicle_data(Base):
 
     def get_city_registration(self):
         return WebDriverWait(self.driver, 30).until(EC.element_to_be_clickable((By.XPATH, self.city_registration)))
+
+    def get_notification(self):
+        return WebDriverWait(self.driver, 30).until(EC.presence_of_element_located((By.XPATH, self.notification)))
 
     def get_continue_btn(self):
         return WebDriverWait(self.driver, 30).until(EC.element_to_be_clickable((By.XPATH, self.continue_btn)))
@@ -93,6 +98,15 @@ class vechicle_data(Base):
         time.sleep(1)
         self.get_city_registration().send_keys(Keys.ENTER)
 
+        # Уведомление об обязательности заполнения полей
+    def presence_notification(self):
+        notice = self.get_notification()
+        value_notise = notice.text
+        assert value_notise == 'Пожалуйста, заполните все обязательные поля.'
+
+
+
+
 
     # METHODS
 
@@ -107,3 +121,15 @@ class vechicle_data(Base):
             self.input_polis_start_date()
             self.input_city_registration('Москва')
             self.press_continue_btn()
+
+    def presence_notification_select_car(self):
+        with allure.step("select_car"):
+            self.click_calculation_not_number()
+            self.click_select_name_car()
+            self.click_select_model_car()
+            self.input_start_year()
+            self.input_power_field('')
+            self.input_polis_start_date()
+            self.input_city_registration('')
+            self.press_continue_btn()
+            self.presence_notification()
