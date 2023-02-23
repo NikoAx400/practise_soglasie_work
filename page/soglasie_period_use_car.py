@@ -82,8 +82,8 @@ class use_car_period(Base):
     def select_type_insurance_1year(self):
         self.get_type_insurance_field().click()
         time.sleep(1)
-        type_insuranse_1 = self.get_type_insurance_1_year().click()
-        return type_insuranse_1
+        self.get_type_insurance_1_year().click()
+
 
         # Проверка значения в поле "Тип страхования"
     def value_type_insurance(self, correct_insurance):

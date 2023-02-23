@@ -53,9 +53,9 @@ class soglasie_policyholder_date(Base):
 
     def input_type_identification_number(self):
         self.get_type_identification_number_field().click()
-        time.sleep(1)
+        time.sleep(2)
         self.get_type_body().click()
-        self.get_type_identification_number_field().click()
+
 
         # Заполнить поле "Идентификационный номер"
     def input_identification_number(self, intnum):
